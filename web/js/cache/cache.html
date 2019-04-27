@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>cache</title>
+</head>
+<body>
+    <script>
+        function factorial (n) {
+            if (n === 0 || n ===1) {
+                return 1
+            }
+            return factorial(n-1) * n
+        }
+        function memorize (fn) {
+            var cache = {}
+            return function () {
+                var key = [].join.call(arguments) + arguments.length
+                if (cache[key]) {
+                    return cache[key]
+                } else {
+                    cache[key] = fn.apply(this, arguments)
+                    return cache[key]
+                }
+            }
+        }
+        var newFn = memorize(factorial)
+        console.time('no m')
+        console.log(factorial(10))
+        console.timeEnd('no m')
+
+        console.time('m1')
+        console.log(newFn(10))
+        console.timeEnd('m1')
+        console.time('m2')
+        console.log(newFn(10))
+        console.timeEnd('m2')
+        console.time('m3')
+        console.log(newFn(10))
+        console.timeEnd('m3')
+    </script>
+</body>
+</html>

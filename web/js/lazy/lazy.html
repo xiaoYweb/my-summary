@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lazy</title>
+</head>
+<body>
+    <script>
+        // var getTime = (function () {
+        //     var t = null
+        //     return function () {
+        //         if (!t) {
+        //             t = new Date().getTime()
+        //         }
+        //         return t
+        //     }
+        // }()) 
+        function getTime () {
+            var t = new Date().getTime()
+            getTime = function () {
+                return t
+            }
+            return t 
+            // return getTime()
+        }  
+        
+        console.log(getTime())
+        console.log(getTime())
+        console.log(getTime())
+
+        function addEvent (dom, type, handler) {// 判断一次后 即可重复使用对应的方法
+            if (dom.addEventListener) {
+                dom.addEventListener(type, handler, false)
+                addEvent = function (dom, type, handler) {
+                    dom.addEventListener(type, handler, false)                    
+                }
+            } else {
+                dom.attachEvent('on' + type, handler)
+                addEvent = function () {
+                    dom.attachEvent('on' + type, handler)  
+                }
+            }
+        }
+
+
+        function lazy (fn) {
+            let ret = null 
+            return function () {
+                return ret ? ret : ret = fn()
+            }
+        }
+        function getSecond () {
+            return new Date().getTime() 
+        }
+        var time = lazy(getSecond)
+    </script>
+</body>
+</html>
