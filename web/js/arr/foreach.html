@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>foreach</title>
+</head>
+<body>
+    <script>
+        var arr = [1,2,3];
+        arr.forEach(function(item, i){
+            console.log(item, i);
+        })    
+        function myForeach (fn) {
+            for (var i = 0; i < this.length; i++) {
+                fn(this[i], i, this);
+            }
+        }
+        Array.prototype.myForEach = myForeach;
+        arr.myForEach(function(item, i){
+            console.log(item, i);
+        }) 
+        arr.myForEach((item, i) => {
+            console.log(item*2, i);
+        })
+    </script>
+</body>
+</html>

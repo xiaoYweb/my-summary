@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>filter</title>
+</head>
+<body>
+    <script>
+        function deepClone (source) {
+            return JSON.parse( JSON.stringify(source) )
+        }
+        var arr = [
+            {name: 'leo', age: 20, sex: 'male'},
+            {name: 'tom', age: 10, sex: 'male'},
+            {name: 'lily', age: 18, sex: 'female'},
+        ];
+        var newArr = arr.filter(function(item, i){
+            return item.age > 12;
+        })
+        console.log('newArr', newArr);
+        // arr[0].name = 'change' filter函数返回新数组 当数组内部返回的对象依然是原数组引用值
+        function myFilter (fn) {
+            var copyArr = deepClone(this);
+            // var copyArr = this;
+            var newArr = [];
+            for (let i = 0; i < copyArr.length; i++) {
+                fn(copyArr[i], i) && newArr.push( copyArr[i] );
+            }
+            return newArr
+        }
+        Array.prototype.myFilter = myFilter;
+        var newArr = arr.myFilter(function(item, i){
+            return item.sex === 'male';
+        })
+        console.log('newArr', newArr);
+    </script>
+</body>
+</html>

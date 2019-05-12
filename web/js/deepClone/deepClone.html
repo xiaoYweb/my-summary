@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>deepClone</title>
+</head>
+<body>
+    <script>
+        function cloneDeep (source) {
+            return JSON.parse( JSON.stringify(source) )
+        }
+        function deepClone (source, target) {
+            for (const prop in source) {
+                if (source.hasOwnProperty(prop)) {
+                    const value = source[prop];
+                    if (typeof(value) === 'object') {
+
+                    } else {
+                        
+                    }
+                }
+            }
+            
+        }
+    </script>
+</body>
+</html>

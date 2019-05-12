@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>reduceRight</title>
+</head>
+<body>
+    <script>
+        var arr = [1,2,3,4,5];
+        arr.reduceRight(function(prev, next, i){
+            console.log(prev, next, i);
+            return next;
+        });  
+        arr.reduceRight(function(prev, next, i){
+            console.log(prev, next, i);
+            return next;
+        }, 0);
+        var value = arr.reduceRight(function(prev, next){
+            return prev + next;
+        })
+        console.log('value', value)
+        function myReduceRight (fn, init) {
+            var prev, next, i,
+                len = this.length;
+            if (init !== undefined) {
+                prev = init;
+                i = len - 1;
+            } else {
+                prev = this[len-1];
+                i = len - 2
+            }
+            for (; i > -1; i--) {
+                prev = fn(prev, this[i], i)
+            }
+            return prev
+        }    
+        Array.prototype.myReduceRight = myReduceRight;
+        var value2 = arr.myReduceRight(function(prev, next, i){
+            console.log(prev,next,i);
+            return prev + next;
+        },0)
+        console.log('value2', value2)
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>reduce</title>
+</head>
+<body>
+    <script>
+        var arr = [1,2,3,4,5];
+        arr.reduce(function(prev, next, i){
+            console.log(prev, next, i);
+            return next;
+        });  
+        arr.reduce(function(prev, next, i){
+            console.log(prev, next, i);
+            return next;
+        }, 0);
+        var value = arr.reduce(function(prev, next){
+            return prev + next;
+        })
+        console.log('value', value)
+        function myReduce (fn, init) {
+            var prev, next, i;
+            if (init !== undefined) {
+                prev = init;
+                i = 0;
+            } else {
+                prev = this[0];
+                i = 1;
+            }
+            for (; i < this.length; i++) {
+                prev = fn(prev, this[i], i);
+            }
+            return prev;
+        }
+        Array.prototype.myReduce = myReduce;
+        var value2 = arr.myReduce(function(prev, next){
+            console.log(prev,next);
+            return prev + next;
+        })
+        console.log('value2', value2)
+    </script>
+</body>
+</html>

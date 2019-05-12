@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>map</title>
+</head>
+<body>
+    <script>
+        function deepClone (source) {
+            return JSON.parse( JSON.stringify(source) )
+        }
+        var arr = [
+            {name: 'leo', age: 20, sex: 'male'},
+            {name: 'tom', age: 10, sex: 'male'},
+            {name: 'lily', age: 18, sex: 'female'},
+        ];
+        var newArr = arr.map(function(item, i){
+            item.age *= 2;
+            return item
+        })
+        console.log('newArr1', newArr);
+        function myMap (fn) {
+            var copyArr = deepClone(this);
+            // var copyArr = this;
+            var newArr = [];
+            for (let i = 0; i < copyArr.length; i++) {
+                newArr.push(fn(copyArr[i], i))
+            }
+            return newArr
+        }
+        Array.prototype.myMap = myMap;
+        var newArr2 = arr.myMap(function(item, i){
+            item.sex === 'male' && (item.gf = true);
+            item.sex === 'female' && (item.bf = true);
+            return item;
+        })
+        console.log('newArr2', newArr2);
+
+
+    </script>
+</body>
+</html>
