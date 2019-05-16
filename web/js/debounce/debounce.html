@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>debounce</title>
+</head>
+<body>
+    <input type="text" id="inpt">
+    <button id="btn">click-add</button>
+    <script>
+        const oinpt = document.getElementById('inpt');
+        const obtn = document.getElementById('btn');
+        function ajax (ev) {
+            console.log('val -- ev', this.value, ev)
+
+        }
+        oinpt.oninput = ajax
+        const debounce = function (handler, delay) {
+            let timer = null;
+            return function (ev) {
+                let _this = this;
+                clearTimeout(timer);
+                let arg = arguments
+                timer = setTimeout(function() {
+                    handler.apply(_this, arg)
+                },delay)
+            }
+        }   
+        oinpt.oninput = debounce(ajax, 1000)
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>throttle</title>
+</head>
+<body>
+    <p id="num">0</p>
+    <button id="btn">click-add</button>
+    <script>
+        const op = document.getElementById('num');
+        const obtn = document.getElementById('btn');
+        obtn.onclick = function (ev) {
+            let val = op.innerText;
+            op.innerText = ++val;
+        }
+        const throttle = function (handler, wait) {
+            let start = Date.now();
+            return function (ev) {
+                let end = Date.now();
+                if (end - start >= wait) {
+                    handler.call(this, ev);
+                    start = end;
+                }
+            }
+        }
+        function clickHanle (ev) {
+            let val = op.innerText;
+            op.innerText = ++val;
+            console.log('ev', ev)
+        }
+        obtn.onclick = throttle(clickHanle, 1000);
+    </script>
+</body>
+</html>
