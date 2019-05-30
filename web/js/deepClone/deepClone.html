@@ -11,19 +11,27 @@
         function cloneDeep (source) {
             return JSON.parse( JSON.stringify(source) )
         }
+        function isArray (sth) {
+            return Object.prototype.toString.call(sth).indexOf('Array') > -1;
+        }
+        function isObject (sth) {
+            return Object.prototype.toString.call(sth).indexOf('Object') > -1;
+        }
         function deepClone (source, target) {
-            for (const prop in source) {
-                if (source.hasOwnProperty(prop)) {
-                    const value = source[prop];
-                    if (typeof(value) === 'object') {
-
-                    } else {
-                        
-                    }
+            var toString = Object.prototype.toString;
+            if (isObject(source)) target = target || {};
+            if (isArray(source)) target = target || [];
+            for (var prop in source) {
+                if (!source.hasOwnProperty(prop)) return; 
+                if ( isArray(source[prop]) || isObject(source[prop]) ) {
+                    target[prop] = deepClone(source[prop]);
+                } else {
+                    target[prop] = source[prop];
                 }
             }
-            
+            return target;
         }
+        var obj = {a: ['1',2,true,null,{b: ['']}]};
     </script>
 </body>
 </html>
