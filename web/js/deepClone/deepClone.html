@@ -22,7 +22,7 @@
             if (isObject(source)) target = target || {};
             if (isArray(source)) target = target || [];
             for (var prop in source) {
-                if (!source.hasOwnProperty(prop)) return; 
+                if (!source.hasOwnProperty(prop)) continue; 
                 if ( isArray(source[prop]) || isObject(source[prop]) ) {
                     target[prop] = deepClone(source[prop]);
                 } else {
@@ -32,6 +32,9 @@
             return target;
         }
         var obj = {a: ['1',2,true,null,{b: ['']}]};
+        const isType = type => sth => Object.prototype.toString.call(sth) === `[object ${type}]`
+        const isFunction = isType('Function')
+
     </script>
 </body>
 </html>
