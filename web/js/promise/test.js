@@ -129,3 +129,57 @@ function fn5() {
   })
 }
 fn5()
+
+function fn6() {
+  let p1 = new Promise(resolve => {
+    setTimeout(() => {
+      resolve(1)
+    }, 400)
+  })
+  let p2 = new Promise((resolve, reject) => {
+    // throw new Error('throw err 2')
+    setTimeout(() => {
+      // reject(4)
+      resolve(2)
+    }, 200)
+  })
+  let p3 = new Promise((resolve, reject) => {
+    // throw new Error('throw err p3')
+    setTimeout(() => {
+      // reject(4)
+      resolve(3)
+    }, 500)
+  })
+  let ap = Promise.race([p1,p2,p3])
+  ap.then(res => {
+    console.log('fn6--> promise.race then res', res)
+  }).catch(err => {
+    console.log('fn6--> promise.race catch err', err)
+  })
+}
+// fn6()
+
+/**
+ * Promise.resolve Promise.reject 
+ */
+function f7() {
+  let p1 = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      Math.random() - 0.5 > 0 ? resolve(111) : reject(222)
+    }, 200)
+    throw new Error('p1 err throw ')
+  })
+  let p2 = p1.then(res => {
+    console.log('fn7 p1--> res', res)
+    return Promise.resolve(res)
+  }, err => {
+    console.log('fn7 p1--> err', err)
+    return Promise.reject(err)
+  })
+  p2.then(res => {
+    console.log('fn7 p2--> res', res)
+  }, err => {
+    console.log('fn7 p2--> err', err)
+  })
+}
+f7()
